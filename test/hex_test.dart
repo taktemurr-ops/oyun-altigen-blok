@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:oyun_altigen_blok/oyun_altigen_blok.dart';
-import 'package:studio_core/core/game_rules.dart';
 import 'package:studio_core/core/level_plan.dart';
 
 void main() {
