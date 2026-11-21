@@ -116,7 +116,7 @@ final altigenBlokConfig = GameConfig(
       'टुकड़ा बोर्ड पर खींचें, या टुकड़ा और फिर खाना छुएँ।',
       'টুকরো বোর্ডে টেনে আনুন, বা টুকরো তারপর ঘর ছুঁন।',
       'Seret keping ke papan, atau ketuk keping lalu kotak.',
-      'Seret keping ke papan, atau ketik keping lalu kotak.',
+      'Seret keping ke papan, atau ketik keping kemudian petak.',
       'ลากชิ้นไปที่กระดาน หรือแตะชิ้นแล้วแตะช่อง',
       'Kéo mảnh lên bàn, hoặc chạm mảnh rồi chạm ô.',
       'I-drag ang piraso sa board, o i-tap ang piraso tapos ang kahon.',
