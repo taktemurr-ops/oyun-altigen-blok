@@ -80,7 +80,7 @@ final altigenBlokConfig = GameConfig(
       'Hoàn thành hàng theo ba hướng!',
       'Kumpletuhin ang linya sa tatlong direksyon!',
     ],
-  seedColor: const Color(0xFFFFB300),
+  seedColor: const Color(0xFFD98E04),
   icon: Icons.hexagon_rounded,
   rules: HexRules(),
   buildPlay: (ctx) => HexView(ctx: ctx),
