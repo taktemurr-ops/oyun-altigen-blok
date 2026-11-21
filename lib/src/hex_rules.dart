@@ -8,6 +8,10 @@ import 'hex_engine.dart';
 const altigenBlokId = 'oyun-altigen-blok';
 
 class HexRules extends GameRules<HexLevel> {
+  /// Üretim + çözücü türü: 100.000 numaralı bölüm (1000 dünya).
+  @override
+  int get levelCount => 100000;
+
   @override
   String get gameId => altigenBlokId;
 
