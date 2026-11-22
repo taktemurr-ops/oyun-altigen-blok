@@ -55,7 +55,15 @@ void paintHexCell(Canvas c, Offset center, double s, Color color,
           ..strokeWidth = s * 0.12);
     return;
   }
-  c.drawPath(path, Paint()..color = color.withValues(alpha: alpha));
+  c.drawPath(path.shift(Offset(0, s * 0.1)), Paint()..color = Colors.black.withValues(alpha: 0.25 * alpha));
+  c.drawPath(
+      path,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color.lerp(color, Colors.white, 0.22)!.withValues(alpha: alpha), Color.lerp(color, Colors.black, 0.18)!.withValues(alpha: alpha)],
+        ).createShader(Rect.fromCircle(center: center, radius: s)));
   c.drawPath(hexPath(center.translate(0, -s * 0.18), s * 0.52),
       Paint()..color = Colors.white.withValues(alpha: 0.16 * alpha));
   if (mark != null) {
@@ -398,13 +406,18 @@ class _BoardPainter extends CustomPainter {
     final g = v.game;
     final s = v._s;
     final o = Offset(size.width / 2, size.height / 2);
-    final empty = Colors.black.withValues(alpha: 0.10);
+    final empty = Colors.white.withValues(alpha: 0.10);
+    final rim = Paint()
+      ..color = Colors.white.withValues(alpha: 0.22)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = math.max(1.0, s * 0.05);
     for (var i = 0; i < g.grid.length; i++) {
       final val = g.grid[i];
       if (val < 0) continue;
       final c = o + hexCenter(g.qOf(i), g.rOf(i), s);
       if (val == HexCell.empty) {
         canvas.drawPath(hexPath(c, s * 0.93), Paint()..color = empty);
+        canvas.drawPath(hexPath(c, s * 0.9), rim);
       } else {
         paintHexCell(canvas, c, s, v.colorOf(val), mark: v.markOf(val));
       }
