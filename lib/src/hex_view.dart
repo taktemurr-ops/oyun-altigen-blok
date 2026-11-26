@@ -6,9 +6,12 @@ import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/services/audio.dart';
 import 'package:studio_core/core/game_rules.dart';
+import 'package:studio_core/app/studio_ui.dart';
 
 import 'hex_engine.dart';
 import 'hex_rules.dart';
+
+final Map<StudioLook, ThemeData> _studioThemes = {};
 
 const double _sqrt3 = 1.7320508075688772;
 
@@ -75,15 +78,29 @@ void paintHexCell(Canvas c, Offset center, double s, Color color,
   }
 }
 
-class HexView extends StatefulWidget {
+/// Oyun ekranı: düğmeler, çipler, üst bilgi ve pencereler onaylı koyu
+/// tasarımda (merkezin paleti, studio-core StudioLook); tahta çizimi kendi
+/// renklerini korur.
+class HexView extends StatelessWidget {
   final PlayContext ctx;
   const HexView({super.key, required this.ctx});
 
   @override
-  State<HexView> createState() => _HexViewState();
+  Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: HexViewBody(ctx: ctx));
+  }
 }
 
-class _HexViewState extends State<HexView> {
+class HexViewBody extends StatefulWidget {
+  final PlayContext ctx;
+  const HexViewBody({super.key, required this.ctx});
+
+  @override
+  State<HexViewBody> createState() => _HexViewState();
+}
+
+class _HexViewState extends State<HexViewBody> {
   late HexLevel level;
   late HexGame game;
   final GlobalKey _boardKey = GlobalKey();
