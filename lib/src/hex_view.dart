@@ -6,9 +6,12 @@ import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/services/audio.dart';
 import 'package:studio_core/core/game_rules.dart';
+import 'package:studio_core/app/studio_ui.dart';
 
 import 'hex_engine.dart';
 import 'hex_rules.dart';
+
+final Map<StudioLook, ThemeData> _studioThemes = {};
 
 const double _sqrt3 = 1.7320508075688772;
 
@@ -211,8 +214,15 @@ class _HexViewState extends State<HexView> {
   }
 
   // ---- Çizim ----
+  /// Oyun içi düğmeler, çipler ve yazılar onaylı koyu tasarımda (merkezin
+  /// paleti); tahta çizimi kendi renklerini korur.
   @override
   Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: Builder(builder: _build));
+  }
+
+  Widget _build(BuildContext context) {
     return LayoutBuilder(builder: (context, cons) {
       final span = level.span;
       final maxW = cons.maxWidth - 16;
