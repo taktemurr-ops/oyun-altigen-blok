@@ -78,15 +78,29 @@ void paintHexCell(Canvas c, Offset center, double s, Color color,
   }
 }
 
-class HexView extends StatefulWidget {
+/// Oyun ekranı: düğmeler, çipler, üst bilgi ve pencereler onaylı koyu
+/// tasarımda (merkezin paleti, studio-core StudioLook); tahta çizimi kendi
+/// renklerini korur.
+class HexView extends StatelessWidget {
   final PlayContext ctx;
   const HexView({super.key, required this.ctx});
 
   @override
-  State<HexView> createState() => _HexViewState();
+  Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: HexViewBody(ctx: ctx));
+  }
 }
 
-class _HexViewState extends State<HexView> {
+class HexViewBody extends StatefulWidget {
+  final PlayContext ctx;
+  const HexViewBody({super.key, required this.ctx});
+
+  @override
+  State<HexViewBody> createState() => _HexViewState();
+}
+
+class _HexViewState extends State<HexViewBody> {
   late HexLevel level;
   late HexGame game;
   final GlobalKey _boardKey = GlobalKey();
@@ -214,15 +228,8 @@ class _HexViewState extends State<HexView> {
   }
 
   // ---- Çizim ----
-  /// Oyun içi düğmeler, çipler ve yazılar onaylı koyu tasarımda (merkezin
-  /// paleti); tahta çizimi kendi renklerini korur.
   @override
   Widget build(BuildContext context) {
-    final look = StudioLook.of(context);
-    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: Builder(builder: _build));
-  }
-
-  Widget _build(BuildContext context) {
     return LayoutBuilder(builder: (context, cons) {
       final span = level.span;
       final maxW = cons.maxWidth - 16;
